@@ -1,7 +1,11 @@
 import { Button } from 'antd';
-import React, { type FC } from 'react';
+import React from 'react';
 
-const Foo: FC<{ title: string }> = (props) => (
+interface IProps {
+  title: string;
+}
+
+const Foo = (props: IProps) => (
   <h4>
     {props.title}
     <Button>按钮</Button>

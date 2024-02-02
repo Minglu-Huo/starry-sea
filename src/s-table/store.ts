@@ -5,7 +5,9 @@ import { createStore } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { defaultTableStore } from './defaultProps';
 
-export type TableStoreType = ReturnType<typeof createTableStore>;
+export type TableStoreType<RecordType> = ReturnType<
+  typeof createTableStore<RecordType>
+>;
 
 export interface ControlItemType {
   visible?: boolean;
@@ -194,7 +196,7 @@ export function createTableStore<
               const formatResultRef = get().formatResultRef;
 
               if (isFunction(formatResultRef?.current)) {
-                data = formatResultRef.current(data);
+                data = formatResultRef?.current?.(data);
               }
 
               if (

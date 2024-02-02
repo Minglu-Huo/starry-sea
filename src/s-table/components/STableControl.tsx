@@ -325,7 +325,7 @@ function STableControl() {
           break;
         case 'screenfull':
           if (isFunction(onScreenfullRef?.current)) {
-            onScreenfullRef.current();
+            onScreenfullRef?.current?.();
             return;
           }
 

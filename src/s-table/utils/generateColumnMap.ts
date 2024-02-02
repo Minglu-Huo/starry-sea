@@ -2,7 +2,7 @@ import { STableProps } from '../STable';
 import { StoreType } from '../store';
 
 export function generateColumnMap(
-  columns: STableProps<any, any, any>['columns'],
+  columns: STableProps<any, any>['columns'],
 ): StoreType<any, any>['columnMap'] {
   // return
   if (!Array.isArray(columns)) return {};

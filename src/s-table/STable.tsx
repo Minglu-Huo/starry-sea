@@ -49,11 +49,11 @@ export interface STableProps<
   formatResult?: FormatResultFn<ApiResult>;
   onScreenfull?: OnScreenfullFn;
   defaultParams?: Record<string, any>;
-  table?: TableStoreType;
+  table?: TableStoreType<RecordType>;
   manual?: boolean;
 }
 
-function InternalTable(
+function InternalTable<RecordType, ApiResult>(
   props: TableProps & Pick<STableProps<any, any>, 'interaction' | 'tips'>,
 ) {
   const tableContext = React.useContext(TableContext);
@@ -89,7 +89,11 @@ function InternalTable(
     showInteractionOnSreenfull: state.showInteractionOnSreenfull,
   }));
 
-  const [internalColumns] = useColumns(columns, columnsMap, columnProps);
+  const [internalColumns] = useColumns<RecordType, ApiResult>(
+    columns,
+    columnsMap,
+    columnProps,
+  );
 
   const { onChange, pagination } = usePagination({
     page: params.page as number,
@@ -194,7 +198,7 @@ function STable<RecordType = any, ApiResult = ApiResultType<RecordType>>(
   const onScreenfullRef = React.useRef(onScreenfull);
   onScreenfullRef.current = onScreenfull;
 
-  const [tableStore] = useTable(table);
+  const [tableStore] = useTable<RecordType>(table);
 
   const action = tableStore?.getState().action;
 
@@ -228,7 +232,7 @@ function STable<RecordType = any, ApiResult = ApiResultType<RecordType>>(
 
   React.useEffect(() => {
     action?.setColumnMap(generateColumnMap(columns));
-    action?.setColumns(columns as STableProps['columns']);
+    action?.setColumns(columns);
   }, [columns]);
 
   React.useEffect(() => {
@@ -240,7 +244,7 @@ function STable<RecordType = any, ApiResult = ApiResultType<RecordType>>(
   return (
     <div ref={tableWrapRef} style={wrapStyle}>
       <TableContext.Provider value={tableStore}>
-        <InternalTable
+        <InternalTable<RecordType, ApiResult>
           interaction={interaction}
           bordered
           tips={tips}

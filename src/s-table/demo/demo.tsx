@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import React from 'react';
-import { SGlobalConfigProvider, STable } from 'starry-sea';
+import { STable } from 'starry-sea';
 import { STableProps } from '../STable';
 
 type Record = { name: string; phone: string; address: string };
@@ -50,49 +50,37 @@ const columns: STableProps['columns'] = [
 ];
 
 function Demo() {
-  // const [table] = STable.useTable();
+  const [table] = STable.useTable();
 
   const wrapref = React.useRef(null);
 
   return (
     <div ref={wrapref}>
-      <SGlobalConfigProvider
-        table={{
-          fetchSettings: {
-            pageNumField: 'c',
-            pageSizeField: 'pagesize',
-          },
-          columnProps: {
-            align: 'right',
-          },
+      <STable<Record, Result>
+        table={table}
+        service={service}
+        defaultParams={{ a: 1 }}
+        interaction={
+          <>
+            <Button style={{ marginRight: 5 }} type="primary">
+              新增
+            </Button>
+            <Button danger>删除</Button>
+          </>
+        }
+        formatResult={(r) => {
+          return r;
         }}
-      >
-        <STable<Record, Result>
-          // table={table}
-          service={service}
-          defaultParams={{ a: 1 }}
-          interaction={
-            <>
-              <Button style={{ marginRight: 5 }} type="primary">
-                新增
-              </Button>
-              <Button danger>删除</Button>
-            </>
-          }
-          formatResult={(r) => {
-            return r;
-          }}
-          formatParams={(params) => {
-            return params;
-          }}
-          columnProps={{ align: 'left' }}
-          screenfullWrapRef={wrapref}
-          fetchSettings={{ pageNumField: 'pagenum', pageSizeField: 'pagesize' }}
-          resultSettings={{ dataSourceField: 'list', totalField: 'total' }}
-          columns={columns}
-          showInteractionOnSreenfull
-        />
-      </SGlobalConfigProvider>
+        formatParams={(params) => {
+          return params;
+        }}
+        columnProps={{ align: 'left' }}
+        screenfullWrapRef={wrapref}
+        fetchSettings={{ pageNumField: 'pagenum', pageSizeField: 'pagesize' }}
+        resultSettings={{ dataSourceField: 'list', totalField: 'total' }}
+        columns={columns}
+        showInteractionOnSreenfull
+      />
     </div>
   );
 }

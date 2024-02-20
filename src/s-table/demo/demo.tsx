@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import React from 'react';
 import { STable } from 'starry-sea';
-import { STableProps } from '../STable';
+import { STableProps } from 'starry-sea/s-table/STable';
 
 type Record = { name: string; phone: string; address: string };
 

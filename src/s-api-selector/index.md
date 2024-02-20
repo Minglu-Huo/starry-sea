@@ -6,12 +6,7 @@ order: 15
 
 # SApiSelector
 
-This is an example component.
-
-```jsx
-import { SApiSelector } from 'starry-sea';
-
-export default () => <SApiSelector title="Hello dumi!" />;
-```
+远程搜索框
+<code src="./demo/demo.tsx"></code>
 
 <!-- <API id="SApiSelector"></API> -->
